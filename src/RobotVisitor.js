@@ -89,6 +89,8 @@ module.exports = (delegate) => {
           console.error(`Error running [willFilter] of visitor [${this.model}]: ${err.message}`);
           console.error(err.stack);
         }
+      } else {
+        return false; // do not skip
       }
     }
 
@@ -100,6 +102,8 @@ module.exports = (delegate) => {
           console.error(`Error running [didFilter] of visitor [${this.model}]: ${err.message}`);
           console.error(err.stack);
         }
+      } else {
+        return true; // default filter, pass the box
       }
     }
 
@@ -116,6 +120,8 @@ module.exports = (delegate) => {
           console.error(`Error running [willProcess] of visitor [${this.model}]: ${err.message}`);
           console.error(err.stack);
         }
+      } else {
+        return false; // default, do not skip
       }
     }
 
@@ -133,7 +139,7 @@ module.exports = (delegate) => {
           console.error(`Error running [didProcess] of visitor [${this.model}]: ${err.message}`);
           console.error(err.stack);
         }
-      }
+      } 
     }
   }
 
