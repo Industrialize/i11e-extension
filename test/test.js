@@ -1,15 +1,34 @@
 exports['test extension'] = {
-  'test robot visitor': function(test) {
+  'test visitor': function(test) {
     const extension = require('../lib/index');
 
-    var count = 0;
     var MyRobotVisitor = extension.createRobotVisitor({
+      initVisitor() {
+        this.count = 0;
+      },
       willProcess(robot, err, box) {
-        count++;
+        this.count++;
       }
     });
 
-    const Robot = require('i11e-robot')([new MyRobotVisitor()]);
+    var MyPipelineVisitor = extension.createPipelineVisitor({
+      initVisitor() {
+        this.count = 0;
+      },
+      willProcess(pipeline, err, box) {
+        this.count++;
+      }
+    })
+
+    var myRbtVisitor = new MyRobotVisitor();
+    var myPlVisitor = new MyPipelineVisitor();
+
+    const Robot = require('i11e-robot');
+    Robot.extend({
+      getRobotVisitors() {
+        return [myRbtVisitor]
+      }
+    });
 
     var MyRobot = Robot.createRobot({
       process(box, done) {
@@ -19,12 +38,16 @@ exports['test extension'] = {
         }
 
         v++;
-        console.log(v);
         done(null, box.set('v', v));
       }
     });
 
     const Pipeline = require('i11e-pipeline');
+    Pipeline.extend({
+      getPipelineVisitors() {
+        return [myPlVisitor];
+      }
+    })
 
     var pl = Pipeline.pipeline((source) => {
       return source._()
@@ -39,6 +62,8 @@ exports['test extension'] = {
       .doto(
         (box) => {
           test.equal(box.get('v'), 5);
+          test.equal(myRbtVisitor.count, 5);
+          test.equal(myPlVisitor.count, 1);
           test.done();
         }
       )
