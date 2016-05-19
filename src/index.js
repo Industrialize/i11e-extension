@@ -1,4 +1,6 @@
 module.exports = {
   createRobotVisitor: require('./RobotVisitor'),
-  createPipelineVisitor: require('./PipelineVisitor')
+  createPipelineVisitor: require('./PipelineVisitor'),
+
+  createExtension: require('./Extension')
 }
