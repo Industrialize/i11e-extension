@@ -4,9 +4,9 @@ var defaultVisitor = {
   getType() {
     return 'robot';
   },
-  willCreate(entity) {
+  willInit(entity) {
   },
-  didCreate(entity) {
+  didInit(entity) {
   },
   willFilter(entity, box) {
   },

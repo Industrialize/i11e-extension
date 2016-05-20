@@ -12,17 +12,7 @@ exports['test extension'] = {
       }
     });
 
-    // var MyPipelineVisitor = extension.createPipelineVisitor({
-    //   initVisitor() {
-    //     this.count = 0;
-    //   },
-    //   willProcess(pipeline, err, box) {
-    //     this.count++;
-    //   }
-    // })
-
     var myRbtVisitor = new MyRobotVisitor();
-    // var myPlVisitor = new MyPipelineVisitor();
 
     var Ext = extension.createExtension({
       getRobotVisitors() {
@@ -32,11 +22,6 @@ exports['test extension'] = {
 
     const Robot = require('i11e-robot');
     Robot.extend(new Ext());
-    // Robot.extend({
-    //   getRobotVisitors() {
-    //     return [myRbtVisitor]
-    //   }
-    // });
 
     var MyRobot = Robot.createRobot({
       process(box, done) {
@@ -52,15 +37,8 @@ exports['test extension'] = {
 
     const Pipeline = require('i11e-pipeline');
 
-    // var pl = Pipeline.pipeline((source) => {
-    //   return source._()
-    //     .install(new MyRobot())
-    //     .install(new MyRobot())
-    //     .install(new MyRobot())
-    //     .install(new MyRobot())
-    //     .install(new MyRobot());
-    // });
-    var pl = Pipeline.pipeline()._()
+    var pl = Pipeline.pipeline();
+    pl._()
       .install(new MyRobot())
       .install(new MyRobot())
       .install(new MyRobot())

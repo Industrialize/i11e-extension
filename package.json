@@ -1,10 +1,11 @@
 {
   "name": "i11e-extension",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "i11e extension",
   "main": "lib/index.js",
   "scripts": {
     "build": "babel src -d lib",
+    "pub": "babel src -d lib; npm publish",
     "test": "nodeunit test"
   },
   "repository": {
